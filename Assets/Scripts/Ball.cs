@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         InititalPush();
+        GameManager.instance.onReset += ResetBall;
     }
 
     private void InititalPush()
@@ -53,6 +54,7 @@ public class Ball : MonoBehaviour
         ScoreZone scoreZone = collision.GetComponent<ScoreZone>();
         if (scoreZone)
         {
+            GameManager.instance.OnScoreZoneReached(scoreZone.id);
             ResetBall();
             InititalPush();
         }

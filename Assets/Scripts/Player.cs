@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Vector2 startPosition;
+
     // You can adjust this speed directly in the Unity Inspector
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
@@ -10,6 +12,17 @@ public class Player : MonoBehaviour
     // Tạo biến để chọn phím trên Inspector
     [SerializeField] private KeyCode upKey;
     [SerializeField] private KeyCode downKey;
+
+    private void Start()
+    {
+        startPosition = transform.position;
+        GameManager.instance.onReset += resetPosition;
+    }
+
+    private void resetPosition()
+    {
+        transform.position = startPosition;
+    }
 
     void Update()
     {
