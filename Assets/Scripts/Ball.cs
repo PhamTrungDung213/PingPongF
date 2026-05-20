@@ -65,13 +65,10 @@ public class Ball : MonoBehaviour
         // Xử lý riêng khi đập vào Vợt (Player)
         if (collision.gameObject.CompareTag("Player"))
         {
-            // 1. Tăng tốc độ quả bóng thêm X
+            // Tăng tốc độ quả bóng thêm X
             currentSpeed += speedIncreasePerHit;
 
-            // 2. Chốt chặn tốc độ: Không cho phép vượt qua maxSpeed
-            //currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-
-            // 3. Tính toán góc nảy
+            // Tính toán góc nảy
             Vector2 ballPos = transform.position;
             Vector2 paddlePos = collision.transform.position;
             float paddleHeight = collision.collider.bounds.size.y;
@@ -79,7 +76,7 @@ public class Ball : MonoBehaviour
             float y = (ballPos.y - paddlePos.y) / paddleHeight;
             float x = ballPos.x < paddlePos.x ? -1 : 1;
 
-            // 4. Áp dụng hướng mới kèm theo tốc độ vừa được tăng
+            // Áp dụng hướng mới kèm theo tốc độ vừa được tăng
             Vector2 newDirection = new Vector2(x, y).normalized;
             rb2d.linearVelocity = newDirection * currentSpeed;
         }

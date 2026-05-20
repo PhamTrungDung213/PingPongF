@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int scoreP1, ScoreP2;
     [SerializeField] private ScoreText scoreTextP1, scoreTextP2;
-    [SerializeField] public System.Action onReset;
+    [SerializeField] public Action onReset;
 
     private void Awake()
     {
