@@ -6,24 +6,23 @@ public class Ball : MonoBehaviour
     public float maxInitialAngle = 0.67f;
 
     [Header("Speed Settings")]
-    public float baseMoveSpeed = 5f;          // Tốc độ ban đầu
-    public float speedIncreasePerHit = 0.5f;  // Lượng tốc độ (x) tăng thêm mỗi lần chạm vợt
-    //public float maxSpeed = 15f;              // Giới hạn tốc độ để bóng không lỗi xuyên tường
+    public float baseMoveSpeed = 5f;          
+    public float speedIncreasePerHit = 0.5f;  
+    //public float maxSpeed = 15f;              
 
-    private float currentSpeed;               // Biến ngầm lưu tốc độ thực tế hiện tại
+    private float currentSpeed;               
 
     private float startX = 0f;
     public float maxStartY = 4f;
 
     private void Start()
     {
-        InititalPush();
         GameManager.instance.onReset += ResetBall;
+        GameManager.instance.gameUI.onStartGame += ResetBall;
     }
 
     private void InititalPush()
     {
-        // Reset tốc độ về mức cơ bản mỗi khi bắt đầu bóng mới
         currentSpeed = baseMoveSpeed;
 
         Vector2 dir = Random.value < 0.5f ? Vector2.left : Vector2.right;
@@ -36,6 +35,7 @@ public class Ball : MonoBehaviour
     {
         float posY = Random.Range(-maxStartY, maxStartY);
         transform.position = new Vector2(startX, posY);
+        InititalPush();
     }
 
     // --- ÉP CỨNG TỐC ĐỘ, KHÔNG CHO VẬT LÝ UNITY CAN THIỆP ---
@@ -55,17 +55,15 @@ public class Ball : MonoBehaviour
         if (scoreZone)
         {
             GameManager.instance.OnScoreZoneReached(scoreZone.id);
-            ResetBall();
-            InititalPush();
+            GameManager.instance.gameAudio.PlayScoreSound();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Xử lý riêng khi đập vào Vợt (Player)
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Tăng tốc độ quả bóng thêm X
+            // Tăng tốc độ quả bóng
             currentSpeed += speedIncreasePerHit;
 
             // Tính toán góc nảy
@@ -79,6 +77,13 @@ public class Ball : MonoBehaviour
             // Áp dụng hướng mới kèm theo tốc độ vừa được tăng
             Vector2 newDirection = new Vector2(x, y).normalized;
             rb2d.linearVelocity = newDirection * currentSpeed;
+
+            GameManager.instance.gameAudio.PlayHitSound();
+        }
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            GameManager.instance.gameAudio.PlayWallSound();
         }
     }
 }

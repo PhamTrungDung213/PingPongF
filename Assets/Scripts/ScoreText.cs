@@ -7,21 +7,16 @@ public class ScoreText : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Animator animator;
 
     public void SetScore(int score)
     {
         text.text = score.ToString();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void HighLight()
     {
-        
+        animator.SetTrigger("highlight");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    [SerializeField] public static GameManager instance;
 
-    [SerializeField] private int scoreP1, ScoreP2;
-    [SerializeField] private ScoreText scoreTextP1, scoreTextP2;
+    [SerializeField] public GameUI gameUI;
+    [SerializeField] public GameAudio gameAudio;
+    [SerializeField] public int scoreP1, ScoreP2;
+    [SerializeField] public ScoreText scoreTextP1, scoreTextP2;
     [SerializeField] public Action onReset;
+    [SerializeField] public int maxScore;
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            gameUI.onStartGame += OnStartGame;
         }
         else
         {
@@ -22,9 +26,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        gameUI.onStartGame -= OnStartGame;
+    }
+
     public void OnScoreZoneReached(int id)
     {
-        onReset?.Invoke();
 
         if (id == 1)
         {
@@ -35,24 +43,29 @@ public class GameManager : MonoBehaviour
             ScoreP2++;
         }
 
-        UpdateScores();
+        gameUI.UpdateScores();
+        gameUI.HightLightScore(id);
+        checkWin();
     }
 
-    private void UpdateScores()
+    private void checkWin()
     {
-        scoreTextP1.SetScore(scoreP1);
-        scoreTextP2.SetScore(ScoreP2);
+        int winnerId = scoreP1==maxScore ? 1 : ScoreP2 == maxScore ? 2 : 0;
+        if (winnerId != 0)
+        {
+            gameUI.OnGameEnd(winnerId);
+            instance.gameAudio.PlayWinSound();
+        }
+        else
+        {
+            onReset?.Invoke();
+        }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnStartGame()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        scoreP1 = 0;
+        ScoreP2 = 0;
+        gameUI.UpdateScores();
     }
 }
