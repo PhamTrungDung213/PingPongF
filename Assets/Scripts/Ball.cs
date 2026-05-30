@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public Rigidbody2D rb2d;
-    public float maxInitialAngle = 0.67f;
+    [SerializeField] private Rigidbody2D rb2d;
+    [SerializeField] public ParticleSystem hitEffect;
+    [SerializeField] private float maxInitialAngle = 0.67f;
 
     [Header("Speed Settings")]
-    public float baseMoveSpeed = 5f;          
-    public float speedIncreasePerHit = 0.5f;  
+    [SerializeField] private float baseMoveSpeed = 5f;          
+    [SerializeField] private float speedIncreasePerHit = 0.5f;  
     //public float maxSpeed = 15f;              
-
-    private float currentSpeed;               
-
-    private float startX = 0f;
-    public float maxStartY = 4f;
+    [SerializeField] private float currentSpeed;               
+    [SerializeField] private float startX = 0f;
+    [SerializeField] private float maxStartY = 4f;
 
     private void Start()
     {
@@ -29,6 +28,8 @@ public class Ball : MonoBehaviour
         dir.y = Random.Range(-maxInitialAngle, maxInitialAngle);
 
         rb2d.linearVelocity = dir.normalized * currentSpeed;
+
+        HitEffect(30);
     }
 
     public void ResetBall()
@@ -38,7 +39,6 @@ public class Ball : MonoBehaviour
         InititalPush();
     }
 
-    // --- ÉP CỨNG TỐC ĐỘ, KHÔNG CHO VẬT LÝ UNITY CAN THIỆP ---
     private void FixedUpdate()
     {
         // Kiểm tra an toàn: Đảm bảo bóng không bị đứng im hoàn toàn (lỗi chia cho 0)
@@ -56,6 +56,7 @@ public class Ball : MonoBehaviour
         {
             GameManager.instance.OnScoreZoneReached(scoreZone.id);
             GameManager.instance.gameAudio.PlayScoreSound();
+            GameManager.instance.screenShake.StartShake(0.3f, 0.1f);
         }
     }
 
@@ -63,6 +64,8 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            HitEffect(20);
+
             // Tăng tốc độ quả bóng
             currentSpeed += speedIncreasePerHit;
 
@@ -79,11 +82,22 @@ public class Ball : MonoBehaviour
             rb2d.linearVelocity = newDirection * currentSpeed;
 
             GameManager.instance.gameAudio.PlayHitSound();
+
+            GameManager.instance.screenShake.StartShake(Mathf.Sqrt(rb2d.linearVelocity.magnitude)*0.08f, 0.05f);
         }
 
         if (collision.gameObject.CompareTag("Wall"))
         {
+            HitEffect(10);
+
             GameManager.instance.gameAudio.PlayWallSound();
+
+            GameManager.instance.screenShake.StartShake(0.03f, 0.03f);
         }
+    }
+
+    private void HitEffect(int amount)
+    {
+        hitEffect.Emit(amount);
     }
 }

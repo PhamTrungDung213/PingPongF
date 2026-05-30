@@ -7,6 +7,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] public System.Action onStartGame;
     [SerializeField] public TextMeshProUGUI winText;
+    [SerializeField] public TextMeshProUGUI volumeValue;
 
     public void OnStartGameButtonClicked()
     {
@@ -36,5 +37,11 @@ public class GameUI : MonoBehaviour
     {
         menu.SetActive(true);
         winText.text = $"Player {winnerId} Wins!";
+    }
+
+    public void SetVolume(float volume)
+    {
+        AudioListener.volume = volume;
+        volumeValue.text = $"{Mathf.RoundToInt(volume * 100)}%";
     }
 }

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameUI gameUI;
     [SerializeField] public GameAudio gameAudio;
+    [SerializeField] public Shake screenShake;
     [SerializeField] public int scoreP1, ScoreP2;
     [SerializeField] public ScoreText scoreTextP1, scoreTextP2;
     [SerializeField] public Action onReset;
