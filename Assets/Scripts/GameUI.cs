@@ -10,7 +10,6 @@ public class GameUI : MonoBehaviour
     [SerializeField] public TextMeshProUGUI switchModeButtonText;
     [SerializeField] public TextMeshProUGUI volumeValue;
     [SerializeField] public GameObject startButton;
-    [SerializeField] private GameObject playModeButton;
     private bool isPaused = false;
 
     private void Start()
@@ -36,9 +35,8 @@ public class GameUI : MonoBehaviour
     public void PauseGame()
     {
         isPaused = true;
-        Time.timeScale = 0f; // Đóng băng toàn bộ thời gian trong game (Bóng và Player sẽ dừng lại)
+        Time.timeScale = 0f;
         menu.SetActive(true);
-        playModeButton.SetActive(false);
         startButton.SetActive(false);
         winText.text = "PAUSE\nEsc again to resume!";
     }
@@ -46,7 +44,7 @@ public class GameUI : MonoBehaviour
     public void ContinueGame()
     {
         isPaused = false;
-        Time.timeScale = 1f; // Khôi phục lại thời gian bình thường để tiếp tục chơi
+        Time.timeScale = 1f;
         menu.SetActive(false);
     }
 
@@ -77,7 +75,6 @@ public class GameUI : MonoBehaviour
     public void OnGameEnd(int winnerId)
     {
         menu.SetActive(true);
-        playModeButton.SetActive(true);
         startButton.SetActive(true);
         winText.text = $"Player {winnerId} Wins!";
     }

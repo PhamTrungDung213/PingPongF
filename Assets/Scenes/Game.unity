@@ -5414,7 +5414,6 @@ MonoBehaviour:
   switchModeButtonText: {fileID: 235180944}
   volumeValue: {fileID: 1603321023}
   startButton: {fileID: 1750900229}
-  playModeButton: {fileID: 1679621439}
 --- !u!1 &235180942
 GameObject:
   m_ObjectHideFlags: 0
@@ -13274,6 +13273,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1783133507}
     m_Modifications:
+    - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
+      propertyPath: timeToAutoPlay
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 880961165578378197, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
       propertyPath: m_Name
       value: P2

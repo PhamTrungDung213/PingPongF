@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 7
-  timeToAutoPlay: 120
+  timeToAutoPlay: 3
   upKey: 273
   downKey: 274
 --- !u!212 &7060755169878147251

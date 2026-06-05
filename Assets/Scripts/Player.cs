@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -6,13 +7,15 @@ public class Player : MonoBehaviour
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float timeToAutoPlay = 120f;
+    [SerializeField] private float timeToAutoPlay = 3f;
     private float idleTimer = 0f;
     private float deadZone = 0.7f;
 
     [Header("Input Settings")]
     [SerializeField] private KeyCode upKey;
     [SerializeField] private KeyCode downKey;
+    private float moveDirection = 0f;
+    private float moveSpeedMultiplier = 1f;
 
     private void Start()
     {
@@ -26,39 +29,48 @@ public class Player : MonoBehaviour
         transform.position = startPosition;
     }
 
-    private void Move()
+    private void MovePlayer()
     {
-        float moveDirection = 0f;
+        float playerInput = Input.GetKey(upKey) ? 1f : (Input.GetKey(downKey) ? -1f : 0f);
+        idleTimer = (playerInput != 0f) ? 0f : idleTimer + Time.deltaTime;
 
-        if (Input.GetKey(upKey))
+        if (playerInput == 0f && idleTimer >= timeToAutoPlay && GameManager.instance.IsAi())
         {
-            moveDirection = 1f;
-            idleTimer = 0f;
-        }
-        else if (Input.GetKey(downKey))
-        {
-            moveDirection = -1f;
-            idleTimer = 0f;
+            if (Mathf.Abs(GameManager.instance.ball.transform.position.y - transform.position.y) > deadZone)
+            {
+                moveDirection = GameManager.instance.ball.transform.position.y > transform.position.y ? 1f : -1f;
+                AiMove(moveDirection);
+            }
+            else
+            {
+                moveDirection = 0f;
+            }
         }
         else
         {
-            idleTimer++;
+            moveDirection = playerInput;
+            Move(moveDirection);
         }
+    }
 
-        if(moveDirection == 0f && idleTimer >= timeToAutoPlay && GameManager.instance.IsAi())
-        {
-            if(Mathf.Abs(GameManager.instance.ball.transform.position.y - transform.position.y) > deadZone)
-            {
-                moveDirection = GameManager.instance.ball.transform.position.y > transform.position.y ? 1f : -1f;
-            }
-        }
-
+    private void Move(float moveDirection)
+    {
         Vector2 direction = new Vector2(0f, moveDirection);
         transform.Translate(direction * moveSpeed * Time.deltaTime);
     }
 
+    private void AiMove(float moveDirection)
+    {
+        if (Random.value < 0.01f)
+        {
+            moveSpeedMultiplier = Random.Range(0.5f, 1.5f);
+        }
+        Vector2 direction = new Vector2(0f, moveDirection);
+        transform.Translate(direction * moveSpeed * moveSpeedMultiplier * Time.deltaTime);
+    }
+
     void Update()
     {
-        Move();
+        MovePlayer();
     }
 }

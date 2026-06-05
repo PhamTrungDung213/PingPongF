@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             gameUI.onStartGame += OnStartGame;
-            gameUI.onStartGame += OnResumeGame;
         }
         else
         {
@@ -40,7 +39,6 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         gameUI.onStartGame -= OnStartGame;
-        gameUI.onStartGame -= OnResumeGame;
     }
 
     public void OnScoreZoneReached(int id)
@@ -79,11 +77,6 @@ public class GameManager : MonoBehaviour
         scoreP1 = 0;
         ScoreP2 = 0;
         gameUI.UpdateScores();
-    }
-
-    private void OnResumeGame()
-    {
-        gameUI.ContinueGame();
     }
 
     public void SwitchPlayMode() 
