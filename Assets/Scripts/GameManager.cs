@@ -9,10 +9,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameUI gameUI;
     [SerializeField] public GameAudio gameAudio;
     [SerializeField] public Shake screenShake;
+    [SerializeField] public Ball ball;
     [SerializeField] public int scoreP1, ScoreP2;
     [SerializeField] public ScoreText scoreTextP1, scoreTextP2;
     [SerializeField] public Action onReset;
     [SerializeField] public int maxScore;
+    [SerializeField] public PlayMode playMode;
+    
+
+    public enum PlayMode
+    {
+        PvP,
+        Ai
+    }
 
     private void Awake()
     {
@@ -20,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             gameUI.onStartGame += OnStartGame;
+            gameUI.onStartGame += OnResumeGame;
         }
         else
         {
@@ -30,6 +40,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         gameUI.onStartGame -= OnStartGame;
+        gameUI.onStartGame -= OnResumeGame;
     }
 
     public void OnScoreZoneReached(int id)
@@ -68,5 +79,28 @@ public class GameManager : MonoBehaviour
         scoreP1 = 0;
         ScoreP2 = 0;
         gameUI.UpdateScores();
+    }
+
+    private void OnResumeGame()
+    {
+        gameUI.ContinueGame();
+    }
+
+    public void SwitchPlayMode() 
+    {
+       switch(playMode)
+        {
+            case PlayMode.PvP:
+                playMode = PlayMode.Ai;
+                break;
+            case PlayMode.Ai:
+                playMode = PlayMode.PvP;
+                break;
+        }
+    }
+
+    public bool IsAi()
+    {
+        return playMode == PlayMode.Ai;
     }
 }
