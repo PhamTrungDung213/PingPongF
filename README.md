@@ -1,6 +1,6 @@
 # Simple PingPong Game
 
-**Design patterns:** Singleton
+**Download:** [https://drive.google.com/file/d/1iRMYI0i1yjxC6LKegLWcE1y_muu8LJuI/view?usp=drive_link]
 
 **Description:**
 The ball bouncing between 2 paddles. Each time it bounces, the ball's speed increases.
@@ -11,4 +11,5 @@ The ball bouncing between 2 paddles. Each time it bounces, the ball's speed incr
 - Default font and Canvas UI (TextMeshPro).
 
 **Development:**
+- Design patterns: Singleton
 - Used AI to support creating scripts.
