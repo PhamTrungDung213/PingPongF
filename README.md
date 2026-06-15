@@ -1,9 +1,9 @@
 # Simple PingPong Game
 
-**Download:** [https://drive.google.com/file/d/1iRMYI0i1yjxC6LKegLWcE1y_muu8LJuI/view?usp=drive_link]
+**Download:** [https://drive.google.com/file/d/1Yqfk4DjC2Y8qka7vsJlLtkZFLyvIbx7A/view?usp=drive_link]
 
 **Description:**
-The ball bouncing between 2 paddles. Each time it bounces, the ball's speed increases.
+The ball is bouncing between 2 paddles. Each time it bounces, the ball's speed increases.
 
 **Features:**
 - The game has a custom visual effect.
