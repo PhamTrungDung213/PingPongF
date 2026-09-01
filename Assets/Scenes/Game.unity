@@ -5413,7 +5413,7 @@ MonoBehaviour:
   winText: {fileID: 1882191656}
   switchModeButtonText: {fileID: 235180944}
   volumeValue: {fileID: 1603321023}
-  startButton: {fileID: 1750900229}
+  startButton: {fileID: 1036521231}
 --- !u!1 &235180942
 GameObject:
   m_ObjectHideFlags: 0
@@ -5956,6 +5956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shake
   initialPosition: {x: 0, y: 0, z: 0}
+  shakeStrength: 0.1
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6010,8 +6011,8 @@ MonoBehaviour:
       colorBlindnessType: 0
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
+  m_ShowToolkit: 1
+  m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
@@ -13273,6 +13274,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1783133507}
     m_Modifications:
+    - target: {fileID: -7530620321631029993, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
       propertyPath: timeToAutoPlay
       value: 3
@@ -13803,6 +13812,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1783133507}
     m_Modifications:
+    - target: {fileID: -7530620321631029993, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
       propertyPath: upKey
       value: 119
@@ -13810,6 +13823,10 @@ PrefabInstance:
     - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
       propertyPath: downKey
       value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: -6479210687614640714, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
+      propertyPath: moveSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 880961165578378197, guid: 4f3e5af15df6d394998f43bf8afb5754, type: 3}
       propertyPath: m_Name

@@ -1,6 +1,8 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] public TextMeshProUGUI winText;
     [SerializeField] public TextMeshProUGUI switchModeButtonText;
     [SerializeField] public TextMeshProUGUI volumeValue;
-    [SerializeField] public GameObject startButton;
+    [SerializeField] public Button startButton;
     private bool isPaused = false;
 
     private void Start()
@@ -37,7 +39,7 @@ public class GameUI : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         menu.SetActive(true);
-        startButton.SetActive(false);
+        startButton.transform.DOScale(Vector3.zero, 0.5f).From(1).SetEase(Ease.OutBack);
         winText.text = "PAUSE\nEsc again to resume!";
     }
 
@@ -75,7 +77,7 @@ public class GameUI : MonoBehaviour
     public void OnGameEnd(int winnerId)
     {
         menu.SetActive(true);
-        startButton.SetActive(true);
+        startButton.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutBack);
         winText.text = $"Player {winnerId} Wins!";
     }
 

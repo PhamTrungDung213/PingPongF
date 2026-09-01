@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     private Vector2 startPosition;
 
+    [SerializeField] private Rigidbody2D rb;
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float timeToAutoPlay = 3f;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         GameManager.instance.onReset += resetPosition;
         GameManager.instance.gameUI.onStartGame += resetPosition;
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour
     private void Move(float moveDirection)
     {
         Vector2 direction = new Vector2(0f, moveDirection);
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        rb.MovePosition(transform.position + (Vector3)direction * moveSpeed * moveSpeedMultiplier * Time.deltaTime);
     }
 
     private void AiMove(float moveDirection)
@@ -66,7 +68,8 @@ public class Player : MonoBehaviour
             moveSpeedMultiplier = Random.Range(0.5f, 1.5f);
         }
         Vector2 direction = new Vector2(0f, moveDirection);
-        transform.Translate(direction * moveSpeed * moveSpeedMultiplier * Time.deltaTime);
+        // transform.Translate(direction * moveSpeed * moveSpeedMultiplier * Time.deltaTime);
+        rb.MovePosition(transform.position + (Vector3)direction * moveSpeed * moveSpeedMultiplier * Time.deltaTime);
     }
 
     void Update()

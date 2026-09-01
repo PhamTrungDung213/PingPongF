@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9785b1dc63b2546a2ef0f4b23a85d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 7
+  rb: {fileID: -7530620321631029993}
+  moveSpeed: 12
   timeToAutoPlay: 3
   upKey: 273
   downKey: 274

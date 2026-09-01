@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class Shake : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class Shake : MonoBehaviour
     {
         initialPosition = transform.localPosition;
     }
+    [SerializeField] private float shakeStrength = 0.1f;
 
     public void StartShake(float maxOffset, float duration)
     {
         StopShake();
-        StartCoroutine(ShakeSequence(maxOffset, duration));
+        // StartCoroutine(ShakeSequence(maxOffset, duration));
+        Camera.main.DOShakePosition(duration, -shakeStrength);
     }
 
     public void StopShake()
@@ -32,6 +35,8 @@ public class Shake : MonoBehaviour
             yield return null;
         }
         transform.localPosition = initialPosition;
+
+        transform.MoveTo(initialPosition);
     }
 
     private void DoShake(float maxOffset)
@@ -39,5 +44,8 @@ public class Shake : MonoBehaviour
         float xOffset = Random.Range(-maxOffset, maxOffset);
         float yOffset = Random.Range(-maxOffset, maxOffset);
         transform.localPosition = initialPosition + new Vector3(xOffset, yOffset, 0f);
+        
     }
+
+  
 }
